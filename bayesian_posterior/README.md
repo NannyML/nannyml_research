@@ -1,15 +1,13 @@
-# Bayesian Posterior
+# Bayesian Estimation of Residual distribution
 
-In this problem we want to find the distribution of posteriors given the point predictions and outcomes of a
+In this problem we want to find the distribution of residuals given the point predictions and outcomes of a
 regression Machine Learning model.
 
-We are looking into this problem so that we can use the distribution of posteriors in order to port
-[performance estimation](https://nannyml.readthedocs.io/en/stable/how_it_works/performance_estimation.html) on regression
-problems. Currently [CBPE algorithm](https://nannyml.readthedocs.io/en/stable/how_it_works/performance_estimation.html)
-only works at classification problems.
+We are looking into this problem so that we can use the learnt distribution of residuals in order to estimate the performance
+of a regression machine learning model on new data. This approach would only work when there is no concept drift.
 
-We looked into many methods of getting a distribution of posteriors from point predictions and outcomes. However in
-this case we are focusing on the Bayesian approach. We think our approach is sound on the high level but has some
+We looked into many methods of getting a distribution of residuals from point predictions and outcomes. However in
+this case we are focusing on a Bayesian approach. We think our approach is sound on the high level but has some
 implementation issues that need resolving before it can give descent results.
 
 ## Setting Up
@@ -36,9 +34,21 @@ $ conda install -c conda-forge jupyterlab scikit-learn python-graphviz
 
 ## Evaluating results
 
+Here's a plot of the final results:
+
+![results plot](results.png)
+
+Some general remarks regarding the results are:
+
 - The results are unstable, I am probably not using a proper way to fix the seed and make the results reproducible.
   However re-running the notebook, may not yield the same (or similar enough) results as a previous run.
 - The estimated error from the learnt distribution of residuals is not close to the actual error.
+
+We should also note here that we have tested other methods that work better in this problem.
+One of them is to use points close to a given point in order to fit an assumed distribution shape.
+We then use those parameters as labels to train a machine learning model to predict them.
+We can then predict the distribution of residuals through this process. This approach yields better results
+than the one we demonstrated here, but conceptually the processes share similarities.
 
 ## Potential remedies?
 
